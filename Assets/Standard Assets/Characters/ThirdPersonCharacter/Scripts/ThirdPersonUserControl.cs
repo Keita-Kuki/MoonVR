@@ -9,17 +9,20 @@ namespace UnityStandardAssets.Characters.ThirdPerson
     [RequireComponent(typeof (ThirdPersonCharacter))]
     public class ThirdPersonUserControl : MonoBehaviour
     {
+		public GameObject sound;
+		private AudioSource audioSource;
         private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
         private Transform m_Cam;                  // A reference to the main camera in the scenes transform
         private Vector3 m_CamForward;             // The current forward direction of the camera
         private Vector3 m_Move;
         private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
 		private Vector3 m_forward;
-		private CapsuleCollider collider;
-		private bool canJump = true;
+		private bool canJump = false;
 
         private void Start()
         {
+			audioSource = sound.GetComponent<AudioSource>();
+
             // get the transform of the main camera
             if (Camera.main != null)
             {
@@ -34,7 +37,6 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
             // get the third person character ( this should never be null due to require component )
             m_Character = GetComponent<ThirdPersonCharacter>();
-			collider = GetComponent<CapsuleCollider>();
 			m_forward = m_Character.transform.forward;
         }
 
@@ -46,6 +48,9 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			{
 				if (canJump) {
 					m_Jump = Input.GetButtonDown ("Jump");
+					if (m_Jump) {
+						audioSource.Play ();
+					}
 				}
             }
         }
