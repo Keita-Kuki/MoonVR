@@ -41,7 +41,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			m_Character.Move (m_forward, false, false);
             if (!m_Jump)
 			{
-                m_Jump = Input.GetButtonDown("Jump");
+					m_Jump = Input.GetButtonDown ("Jump");
             }
         }
 
