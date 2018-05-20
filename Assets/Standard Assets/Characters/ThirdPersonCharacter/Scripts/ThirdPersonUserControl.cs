@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
@@ -12,8 +14,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         private Vector3 m_CamForward;             // The current forward direction of the camera
         private Vector3 m_Move;
         private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
+		private Vector3 m_forward;
+		private CapsuleCollider collider;
+		private bool canJump = true;
 
-        
         private void Start()
         {
             // get the transform of the main camera
@@ -30,14 +34,19 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
             // get the third person character ( this should never be null due to require component )
             m_Character = GetComponent<ThirdPersonCharacter>();
+			collider = GetComponent<CapsuleCollider>();
+			m_forward = m_Character.transform.forward;
         }
 
 
         private void Update()
         {
+			m_Character.Move (m_forward, false, false);
             if (!m_Jump)
-            {
-                m_Jump = CrossPlatformInputManager.GetButtonDown("Jump");
+			{
+				if (canJump) {
+					m_Jump = Input.GetButtonDown ("Jump");
+				}
             }
         }
 
@@ -69,7 +78,22 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
             // pass all parameters to the character control script
             m_Character.Move(m_Move, crouch, m_Jump);
-            m_Jump = false;
+            m_Jump = false;  
         }
+		 
+		//オブジェクトが衝突したとき
+		void OnCollisionEnter(Collision collision) {
+			canJump = true;
+		}
+
+		//オブジェクトが離れた時
+		void OnCollisionExit(Collision collision) {
+			canJump = false;
+		}
+
+		void OnCollisionStay(Collision collision) {
+			canJump = true;
+		}
     }
+
 }
