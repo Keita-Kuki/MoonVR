@@ -13,6 +13,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		private Vector3 m_Move;
 		private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
 		private Vector3 m_forward;
+		private bool canJump = false;
 
 		private void Start()
 		{
@@ -38,8 +39,10 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 		{
 			if (!m_Jump)
 			{
-				m_Jump = GvrController.ClickButtonDown;
-				m_Character.Move (m_forward, false, m_Jump);
+				if (canJump) {
+					m_Jump = GvrControllerInput.ClickButtonDown;
+					m_Character.Move (m_forward, false, m_Jump);
+				}
 			}
 		}
 
@@ -71,6 +74,20 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 			// pass all parameters to the character control script
 			m_Character.Move(m_Move, crouch, m_Jump);
 			m_Jump = false;
+		}
+
+		//オブジェクトが衝突したとき
+		void OnCollisionEnter(Collision collision) {
+			canJump = true;
+		}
+
+		//オブジェクトが離れた時
+		void OnCollisionExit(Collision collision) {
+			canJump = false;
+		}
+
+		void OnCollisionStay(Collision collision) {
+			canJump = true;
 		}
 	}
 }
