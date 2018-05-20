@@ -3,7 +3,19 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Absinthe
+  - Wine
+  - TiaMaria
+  - Tequila
+  - Vermouth
+  - Whiskey
+  - Martini
+  - Beer
+  - CafeLiqueur
+  - Ethan
+  - StartLine
+  - GoalLine
   layers:
   - Default
   - TransparentFX
