@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
@@ -38,7 +40,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         {
 			m_Character.Move (m_forward, false, false);
             if (!m_Jump)
-            {
+			{
                 m_Jump = Input.GetButtonDown("Jump");
             }
         }
