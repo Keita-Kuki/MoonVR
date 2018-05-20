@@ -9,5 +9,9 @@ EditorBuildSettings:
     path: Assets/MoonVR/SampeScene/MoonSample.unity
     guid: 3d5b8b8693f9e644a8729a0a73846579
   - enabled: 1
-    path: Assets/MoonVR/Scenes/Sakaki_work.unity
+    path: Assets/MoonVR/Scenes/Main.unity
     guid: 4fe66b747a58d486fb10eb5242d62253
+  - enabled: 1
+    path: Assets/MoonVR/Scenes/Title.unity
+    guid: bc258d2b45d744d44a53a672ec1ab8ef
+  m_configObjects: {}

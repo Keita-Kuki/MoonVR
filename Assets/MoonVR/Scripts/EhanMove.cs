@@ -1,39 +1,19 @@
-using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class EhanMove : MonoBehaviour {
-	public float speed = 3f;
-	public float jumppower = 200f;
-	public float directionConstant = 1.25f;
 
+	public bool minus10s;
 	public bool isstarted;
 	public bool isgoaled;
 
-	private Vector3 velocity;
-	
-	Rigidbody rb;
  
 	void Start(){
-		rb = GetComponent<Rigidbody> ();
-		velocity = new Vector3(0,0,0);
 		isstarted = false;
 		isgoaled = false;
-	}
- 
-	void Update () {
-		velocity.x = Input.GetAxis ("Vertical") * speed / Time.deltaTime;
-		velocity.z = -directionConstant * velocity.x;
-	}
- 
-	void FixedUpdate(){
-		rb.velocity = velocity;
-		if(Input.GetButtonDown("Jump")) {
-			rb.AddForce(Vector3.up * jumppower * 100000);
-		}
-
-
+		minus10s = false;
 	}
 
 	void OnTriggerStay(Collider other){
@@ -44,5 +24,17 @@ public class EhanMove : MonoBehaviour {
 			isgoaled = true;
 		}
     }
+
+
+	void OnCollisionEnter(Collision other){
+		if (other.gameObject.tag == "Point"){
+			minus10s = true;
+			Destroy(other.gameObject);
+		}
+	}
+
+	public void Afterminus10s(){
+		minus10s = false;
+	}
 
 }
