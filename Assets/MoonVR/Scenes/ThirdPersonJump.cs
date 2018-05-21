@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.SceneManagement;
 
 namespace UnityStandardAssets.Characters.ThirdPerson
 {
 	[RequireComponent(typeof (ThirdPersonCharacter))]
 	public class ThirdPersonJump : MonoBehaviour {
+		public GameObject sound;
+		private AudioSource audio;
 		private ThirdPersonCharacter m_Character; // A reference to the ThirdPersonCharacter on the object
 		private Transform m_Cam;                  // A reference to the main camera in the scenes transform
 		private Vector3 m_CamForward;             // The current forward direction of the camera
@@ -17,6 +20,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 
 		private void Start()
 		{
+			audio = sound.GetComponent<AudioSource> ();
 			// get the transform of the main camera
 			if (Camera.main != null)
 			{
@@ -42,7 +46,14 @@ namespace UnityStandardAssets.Characters.ThirdPerson
 				if (canJump) {
 					m_Jump = GvrControllerInput.ClickButtonDown;
 					m_Character.Move (m_forward, false, m_Jump);
+					if (m_Jump) {
+						audio.Play ();
+					}
 				}
+			}
+
+			if (GvrControllerInput.AppButtonDown){
+				SceneManager.LoadScene("Main");
 			}
 		}
 

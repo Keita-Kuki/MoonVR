@@ -16,7 +16,7 @@ namespace UnityStandardAssets.Characters.ThirdPerson
         private bool m_Jump;                      // the world-relative desired move direction, calculated from the camForward and user input.
 		private Vector3 m_forward;
 		private CapsuleCollider collider;
-		private bool canJump = true;
+		private bool canJump = false;
 
         private void Start()
         {
